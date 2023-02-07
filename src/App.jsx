@@ -19,7 +19,11 @@ const App = () => {
             <Dashboard/>
           </Guard>
         } />
-        <Route path='/' element={<Dashboard/>} />
+        <Route path='/' element={
+          <Guard>
+            <Dashboard/>
+          </Guard>
+        } />
         <Route path='/login' element={<Login/>} />
         <Route path='/profile' element={<Profile token={token} user={user}/>} />
       </Routes>
