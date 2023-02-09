@@ -1,7 +1,16 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom'
+import { removeUser } from '../services/AuthSlice';
 
 const Navbar = ({user,token}) => {
+  const nav = useNavigate();
+  const dispatch = useDispatch();
+
+  const logOutHandler= () =>{
+    dispatch(removeUser());
+    nav('/login');
+  }
   return (
     <div>
           <div className="navbar bg-gray-700 rounded-lg mt-5 ">
@@ -39,6 +48,7 @@ const Navbar = ({user,token}) => {
                     </Link>
                   </li>
                   <li><a>Settings</a></li>
+                  <li><button onClick={logOutHandler}>Log Out</button></li>
                 </ul>
               </div>
             </div>

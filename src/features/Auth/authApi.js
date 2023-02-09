@@ -13,7 +13,6 @@ export const authApi = createApi({
             }),
             invalidatesTags: ['Auth'],
         }),
-
     })
 })
 

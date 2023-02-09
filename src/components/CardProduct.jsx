@@ -1,6 +1,8 @@
 import React from 'react'
 import {AiFillStar} from 'react-icons/ai'
 import {GiPriceTag} from 'react-icons/gi'
+
+
 const CardProduct = ({product}) => {
   return (
     <div>

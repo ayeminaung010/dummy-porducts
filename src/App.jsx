@@ -4,12 +4,9 @@ import { Route, Routes } from 'react-router-dom'
 import Guard from './components/Guard'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
-import Products from './pages/Products'
 import Profile from './pages/Profile'
 
 const App = () => {
-  const token = Cookies.get('token');
-  const user = JSON.parse(Cookies.get('user'));
 
   return (
     <div className="container mx-auto">
@@ -25,7 +22,11 @@ const App = () => {
           </Guard>
         } />
         <Route path='/login' element={<Login/>} />
-        <Route path='/profile' element={<Profile token={token} user={user}/>} />
+        <Route path='/profile' element={
+          <Guard>
+            <Profile/>
+          </Guard>
+          }/>
       </Routes>
     </div>
   )

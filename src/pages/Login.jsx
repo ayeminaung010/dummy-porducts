@@ -11,18 +11,15 @@ const Login = () => {
     const dispatch = useDispatch();
     const nav = useNavigate();
 
+
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = async({username,password,remember_me}) =>{
         const user = {username,password,remember_me};
         const {data,error} = await loginUser(user);
-        if(data){
-            const sendData = {user : data , token : data?.token}
-            dispatch(addUser(sendData))
-            Cookies.set('user',JSON.stringify(data),{ expires: 10 });
-            Cookies.set('token', data?.token,{ expires: user.remember_me ? 10 : null });        
-            nav('/dashboard');
-        }
-        
+
+        const sendData = {user : data , token : data?.token ,remember_me : remember_me}
+        const result  =  dispatch(addUser(sendData));
+        nav('/dashboard');
     }
 
   return (

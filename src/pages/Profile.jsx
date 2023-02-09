@@ -1,8 +1,18 @@
-import React from 'react'
+import Cookies from 'js-cookie';
+import React, { useEffect } from 'react'
 import Navbar from '../components/Navbar'
 
-const Profile = ({user,token}) => {
-  console.log(user);
+const Profile = () => {
+  const remember_me = Cookies.get('remember_me');
+
+  if(remember_me === 'false'){ 
+    var user = JSON.parse(sessionStorage.getItem('user'));
+    var token = sessionStorage.getItem('token');
+  }else{
+    var token = Cookies.get('token');
+    var user = JSON.parse(Cookies.get('user'));
+  }
+
   return (
     <div>
         <Navbar user={user} token={token} />
