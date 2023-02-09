@@ -52,14 +52,16 @@ const RelatedProducts = ({id,category,token}) => {
 
   return (
     <div className='mt-32 mx-14 my-10'>
+        <div className=" text-xl font-semibold my-5">
+            YOU MAY ALSO LIKE
+        </div>
         <Carousel
          showDots={true} 
          autoPlay={true}
-         autoPlaySpeed={1000} 
+         autoPlaySpeed={5000} 
          customTransition="all .9" 
          responsive={responsive}
          transitionDuration={500}
-        
          >
             {product}
         </Carousel>

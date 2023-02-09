@@ -14,10 +14,23 @@ const Navbar = ({user,token}) => {
   return (
     <div>
           <div className="navbar bg-gray-700 rounded-lg mt-5 ">
-            <div className="flex-1">
-              <Link to={'/dashboard'} className="btn btn-ghost normal-case text-xl">Daisy SHOP</Link>
+
+            <div className="flex-1 gap-2">
+              <label htmlFor="my-drawer" className="btn btn-outline drawer-button">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-5 h-5 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+              </label>
+              <Link to={'/dashboard'} className="btn btn-ghost normal-case text-white text-xl font-bold">Daisy SHOP</Link>
             </div>
-            <div className="flex-none">
+
+            <div className=" flex-none  ">
+              <div className="form-control hidden md:block md:mr-5">
+                <input type="text" placeholder="Search" className="input input-bordered" />
+              </div>
+              <label tabIndex={0} className="btn btn-ghost btn-circle md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+              </label>
+            </div>
+            <div className="flex-none ">
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle">
                   <div className="indicator">
@@ -25,6 +38,7 @@ const Navbar = ({user,token}) => {
                     <span className="badge badge-sm indicator-item">8</span>
                   </div>
                 </label>
+                
                 <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow">
                   <div className="card-body">
                     <span className="font-bold text-lg">8 Items</span>
