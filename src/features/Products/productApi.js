@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
+
 export const productApi = createApi({
     reducerPath : 'productApi',
     baseQuery : fetchBaseQuery({baseUrl: 'https://dummyjson.com'}),
@@ -12,7 +13,21 @@ export const productApi = createApi({
             }),
             providesTags: ['Product'],
         }),
+        getSingleProucts : builder.query({
+            query : ({id,token}) => ({
+                url : `/products/${id}`,
+                headers : {authorization : `Bearer ${token}`},
+            }),
+            providesTags: ['Product'],
+        }),
+        getProductsCategory : builder.query({
+            query : ({category,token}) => ({
+                url : `/products/category/${category}`,
+                headers : {authorization : `Bearer ${token}`},
+            }),
+            providesTags: ['Product'],
+        })
     })
 })
 
-export const { useGetProductsQuery} = productApi;
+export const { useGetProductsQuery,useGetSingleProuctsQuery,useGetProductsCategoryQuery} = productApi;

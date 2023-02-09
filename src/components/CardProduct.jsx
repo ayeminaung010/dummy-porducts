@@ -1,6 +1,7 @@
 import React from 'react'
 import {AiFillStar} from 'react-icons/ai'
 import {GiPriceTag} from 'react-icons/gi'
+import { Link } from 'react-router-dom'
 
 
 const CardProduct = ({product}) => {
@@ -9,9 +10,15 @@ const CardProduct = ({product}) => {
         <div className="card w-96 h-[500px] bg-gray-800 shadow-xl ">
             <figure className=' '><img src={product?.thumbnail} className='h-72 w-full  rounded' /></figure>
               <div className="card-body">
-                <h2 className="card-title">
-                  {product?.brand.substring(0,40)}...
-                </h2>
+                <Link to={`/product/detail/${product?.id}`}>
+                  <h2 className="card-title">
+                    {product?.title.substring(0,20)}
+                  </h2>
+                </Link>
+                
+                <div className="">
+                  <span className=' text-lg'>{product?.brand.substring(0,20)}</span>
+                </div>
                 <div className="badge badge-secondary">{product?.discountPercentage} % discount</div>
                 <p>{product?.description.substring(0,50)}...</p>
                 <div className="mt-2">

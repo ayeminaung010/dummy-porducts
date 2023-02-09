@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import Guard from './components/Guard'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
+import ProductDetail from './pages/products/ProductDetail'
 import Profile from './pages/Profile'
 
 const App = () => {
@@ -26,7 +27,12 @@ const App = () => {
           <Guard>
             <Profile/>
           </Guard>
-          }/>
+        }/>
+        <Route path='/product/detail/:id' element={
+          <Guard>
+            <ProductDetail/>
+          </Guard>
+        }/>
       </Routes>
     </div>
   )
