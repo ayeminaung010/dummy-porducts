@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { useGetAllCategoriesQuery } from '../../features/Category/CategoryApi'
 
 const Category = ({user,token}) => {
@@ -8,11 +9,10 @@ const Category = ({user,token}) => {
     <div>
         {data?.map((i,index) => (
             <li key={index}>
-                <a className=' capitalize'>{i}</a>
+                <Link to={`/products/category/${i}`} className=' capitalize'>{i}</Link>
             </li>  
         ))}
-        
-        
+      
     </div>
   )
 }

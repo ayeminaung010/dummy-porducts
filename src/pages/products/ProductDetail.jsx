@@ -31,6 +31,11 @@ const ProductDetail = () => {
         }
     }
 
+    const handleChange = event => {
+        setCount(event.target.value);
+      };
+  
+
     //image handle
     const imageHandler = (src) =>{
         const thumbnail = document.querySelector('.thumbnail');
@@ -99,7 +104,7 @@ const ProductDetail = () => {
                 <div className=" flex flex-wrap gap-5">
                     <div className=" flex flex-wrap gap-3">
                         <button className=' btn btn-outline' onClick={decreaseBtn}>-</button>
-                        <input type="number" className='input w-28 font-semibold   max-w-xs' value={count}  />
+                        <input type="number" className='input w-28 font-semibold   max-w-xs' value={count} onChange={handleChange}  />
                         <button className=' btn btn-outline' onClick={increaseBtn}>+</button>
                     </div>
                     <div className="">

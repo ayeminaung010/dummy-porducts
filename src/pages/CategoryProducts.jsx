@@ -1,11 +1,12 @@
 import Cookies from 'js-cookie'
-import React, { useEffect } from 'react'
+import React from 'react'
+import { useParams } from 'react-router-dom';
+import CardCategory from '../components/categories/CardCategory';
 import Navbar from '../components/Navbar';
-import Products from './Products';
 
-const Dashboard = () => {
-
+const CategoryProducts = () => {
   const remember_me = Cookies.get('remember_me');
+  const {category} =useParams();
 
   if(remember_me === 'false'){ 
     var user = JSON.parse(sessionStorage.getItem('user'));
@@ -18,9 +19,9 @@ const Dashboard = () => {
   return (
     <div className=' container mx-auto'>
       <Navbar token={token} user={user}/>
-      <Products  token={token} user={user}/>
+      <CardCategory category={category}  token={token} user={user}/>
     </div>
   )
 }
 
-export default Dashboard
+export default CategoryProducts
