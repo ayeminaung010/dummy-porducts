@@ -13,6 +13,11 @@ const App = () => {
   return (
     <div className="container mx-auto">
       <Routes>
+        <Route path='/dashboard/:search' element={
+          <Guard>
+            <Dashboard/>
+          </Guard>
+        } />
         <Route path='/dashboard' element={
           <Guard>
             <Dashboard/>
@@ -39,6 +44,7 @@ const App = () => {
             <CategoryProducts/>
           </Guard>
         }/>
+        
       </Routes>
     </div>
   )

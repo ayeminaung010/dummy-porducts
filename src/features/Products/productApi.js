@@ -26,8 +26,15 @@ export const productApi = createApi({
                 headers : {authorization : `Bearer ${token}`},
             }),
             providesTags: ['Product'],
+        }),
+        searchProducts : builder.query({
+            query : ({search,token}) => ({
+                url : `/products/search?q=${search}`,
+                headers : {authorization : `Bearer ${token}`},
+            }),
+            providesTags: ['Product'],
         })
     })
 })
 
-export const { useGetProductsQuery,useGetSingleProuctsQuery,useGetProductsCategoryQuery} = productApi;
+export const { useGetProductsQuery,useGetSingleProuctsQuery,useGetProductsCategoryQuery,useSearchProductsQuery} = productApi;

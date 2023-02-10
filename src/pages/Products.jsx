@@ -1,13 +1,24 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import CardProduct from '../components/CardProduct';
 import Category from '../components/categories/Category';
 import Loader from '../components/Loader';
-import { useGetProductsQuery } from '../features/Products/productApi'
+import { useGetProductsQuery, useSearchProductsQuery } from '../features/Products/productApi'
 
-const Products = ({user,token}) => {
-    const {data,isLoading} = useGetProductsQuery(token);
-
+const Products = ({user,token,search}) => {
+  
+    if(search){
+      var {data,isLoading} = useSearchProductsQuery({search,token});
+      data?.products.map((product) => {
+        <CardProduct key={product?.id} product={product}/>
+       })
+    }else{
+      var {data,isLoading} = useGetProductsQuery(token);
+      data?.products.map((product) => {
+        <CardProduct key={product?.id} product={product}/>
+       })
+    }
+    
   return (
     <div >
         {isLoading ? (<Loader/>)

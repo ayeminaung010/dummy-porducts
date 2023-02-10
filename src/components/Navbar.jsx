@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
+import { useSearchProductsQuery } from '../features/Products/productApi';
 import { removeUser } from '../services/AuthSlice';
+import CardProduct from './CardProduct';
+import {BiSearch} from 'react-icons/bi';
 
 const Navbar = ({user,token}) => {
   const nav = useNavigate();
@@ -11,10 +15,21 @@ const Navbar = ({user,token}) => {
     dispatch(removeUser());
     nav('/login');
   }
+  const [search,setSearch] = useState('');
+  const {data,isLoading} = useSearchProductsQuery({search,token});
+
+  // data search
+   const searchHandler= () => {
+    data?.products.map((product) => {
+      <CardProduct key={product?.id} product={product}/>
+     })
+     nav(`/dashboard/${search}`);
+   }
+
+
   return (
     <div>
           <div className="navbar bg-gray-700 rounded-lg mt-5 ">
-
             <div className="flex-1 gap-2">
               <label htmlFor="my-drawer" className="btn btn-outline drawer-button">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-5 h-5 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -23,8 +38,10 @@ const Navbar = ({user,token}) => {
             </div>
 
             <div className=" flex-none  ">
+              {/* search box  */}
               <div className="form-control hidden md:block md:mr-5">
-                <input type="text" placeholder="Search" className="input input-bordered" />
+                <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}  placeholder="Search" className="input input-bordered" />
+                <button className='btn btn-ghost ml-2' onClick={searchHandler}><BiSearch/></button>
               </div>
               <label tabIndex={0} className="btn btn-ghost btn-circle md:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
@@ -67,8 +84,21 @@ const Navbar = ({user,token}) => {
               </div>
             </div>
           </div>
+          
     </div>
   )
 }
 
 export default Navbar
+
+// <div className="flex  justify-between px-6 py-3 border-b-2 rounded-md hover:bg-info hover:text-white">
+//     <div className="">
+//         <div className=" flex flex-col gap-3">
+//           <h3>{product?.title}</h3>
+//           <p>{product?.brand}</p>
+//         </div>
+//     </div>
+//     <div className="">
+//       <img src={product?.thumbnail} className=' w-24' alt="" />
+//     </div>
+// </div>
