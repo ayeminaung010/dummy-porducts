@@ -15,13 +15,13 @@ const CardProduct = ({product}) => {
             <figure className=' '><img src={product?.thumbnail} className='h-72 w-full  rounded' /></figure>
               <div className="card-body">
                 <Link to={`/product/detail/${product?.id}`}>
-                  <h2 className="card-title">
+                  <h2 className="card-title text-white">
                     {product?.title.substring(0,20)}
                   </h2>
                 </Link>
                 
                 <div className="">
-                  <span className=' text-lg'>{product?.brand.substring(0,20)}</span>
+                  <span className=' text-lg'>Brand Name - {product?.brand.substring(0,20)} </span>
                 </div>
                 <div className="badge badge-secondary">{product?.discountPercentage} % discount</div>
                 <p>{product?.description.substring(0,50)}...</p>

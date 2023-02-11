@@ -24,7 +24,8 @@ const Navbar = ({user,token,carts}) => {
     })
     nav(`/dashboard/${search}`);
    }
-  
+
+   let totalPrice = carts?.cart?.reduce((pv,cv) => pv+cv.price,0);
 
   return (
     <div>
@@ -38,9 +39,11 @@ const Navbar = ({user,token,carts}) => {
 
             <div className=" flex-none  ">
               {/* search box  */}
-              <div className="form-control hidden md:block md:mr-5">
-                <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}  placeholder="Search" className="input input-bordered" />
-                <button className='btn bg-gray-800 ml-2' onClick={searchHandler}><BiSearch className=' text-lg'/></button>
+              <div className="form-control hidden md:block md:mr-5 ">
+                <div className=" flex justify-center items-center">
+                  <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}  placeholder="Search" className="input input-bordered" />
+                  <button className='btn bg-gray-800 ml-2' onClick={searchHandler}><BiSearch className=' text-lg'/></button>
+                </div>
               </div>
               {/* mobile search  */}
               <label tabIndex={0} className="btn btn-ghost btn-circle md:hidden">
@@ -52,14 +55,14 @@ const Navbar = ({user,token,carts}) => {
                 <label tabIndex={0} className="btn btn-ghost btn-circle">
                   <div className="indicator">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                    <span className="badge badge-sm indicator-item">{carts?.total}</span>
+                    <span className="badge badge-sm indicator-item">{carts?.cart?.length}</span>
                   </div>
                 </label>
                 
                 <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow">
                   <div className="card-body">
-                    <span className="text-info">Total Price: {carts?.totalPrice} $</span>
                     <div className="card-actions">
+                      <span className=' font-semibold text-xl my-3'>SubTotal - <span className=' text-warning'>{totalPrice} $</span></span>
                         <Link to={'/carts'} className="btn btn-primary btn-block">View cart</Link>
                     </div>
                   </div>
