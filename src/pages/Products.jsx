@@ -18,7 +18,7 @@ const Products = ({user,token,search}) => {
         <CardProduct key={product?.id} product={product}/>
        })
     }
-    
+
   return (
     <div >
         {isLoading ? (<Loader/>)

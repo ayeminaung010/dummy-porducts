@@ -2,6 +2,7 @@ import Cookies from 'js-cookie'
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Guard from './components/Guard'
+import CartList from './pages/Cart/CartList'
 import CategoryProducts from './pages/CategoryProducts'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
@@ -42,6 +43,12 @@ const App = () => {
         <Route path='/products/category/:category' element={
           <Guard>
             <CategoryProducts/>
+          </Guard>
+        }/>
+
+        <Route path='/carts' element={
+          <Guard>
+            <CartList/>
           </Guard>
         }/>
         

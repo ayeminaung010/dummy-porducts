@@ -1,10 +1,14 @@
 import React from 'react'
 import {AiFillStar} from 'react-icons/ai'
 import {GiPriceTag} from 'react-icons/gi'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { addCarts } from '../services/CartSlice'
 
 
 const CardProduct = ({product}) => {
+  const dispatch = useDispatch();
+
   return (
     <div>
         <div className="card w-96 h-[500px] bg-gray-800 shadow-xl ">
@@ -31,7 +35,7 @@ const CardProduct = ({product}) => {
                     <div className="">
                         <span className=' flex gap-2 items-center font-bold'> <GiPriceTag className=' text-red-500 text-xl'/> {product?.price} $</span>
                     </div>
-                    <button className='btn btn-warning py-1'>Add to Cart</button>
+                    <button className='btn btn-warning py-1' onClick={() => dispatch(addCarts(product))}>Add to Cart</button>
                 </div>
               </div>
         </div>

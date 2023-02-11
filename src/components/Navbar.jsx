@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
-import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import { useSearchProductsQuery } from '../features/Products/productApi';
 import { removeUser } from '../services/AuthSlice';
 import CardProduct from './CardProduct';
 import {BiSearch} from 'react-icons/bi';
 
-const Navbar = ({user,token}) => {
+const Navbar = ({user,token,carts}) => {
   const nav = useNavigate();
   const dispatch = useDispatch();
 
@@ -22,10 +21,10 @@ const Navbar = ({user,token}) => {
    const searchHandler= () => {
     data?.products.map((product) => {
       <CardProduct key={product?.id} product={product}/>
-     })
-     nav(`/dashboard/${search}`);
+    })
+    nav(`/dashboard/${search}`);
    }
-
+  
 
   return (
     <div>
@@ -41,8 +40,9 @@ const Navbar = ({user,token}) => {
               {/* search box  */}
               <div className="form-control hidden md:block md:mr-5">
                 <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}  placeholder="Search" className="input input-bordered" />
-                <button className='btn btn-ghost ml-2' onClick={searchHandler}><BiSearch/></button>
+                <button className='btn bg-gray-800 ml-2' onClick={searchHandler}><BiSearch className=' text-lg'/></button>
               </div>
+              {/* mobile search  */}
               <label tabIndex={0} className="btn btn-ghost btn-circle md:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
               </label>
@@ -52,16 +52,15 @@ const Navbar = ({user,token}) => {
                 <label tabIndex={0} className="btn btn-ghost btn-circle">
                   <div className="indicator">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                    <span className="badge badge-sm indicator-item">8</span>
+                    <span className="badge badge-sm indicator-item">{carts?.total}</span>
                   </div>
                 </label>
                 
                 <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow">
                   <div className="card-body">
-                    <span className="font-bold text-lg">8 Items</span>
-                    <span className="text-info">Subtotal: $999</span>
+                    <span className="text-info">Total Price: {carts?.totalPrice} $</span>
                     <div className="card-actions">
-                      <button className="btn btn-primary btn-block">View cart</button>
+                        <Link to={'/carts'} className="btn btn-primary btn-block">View cart</Link>
                     </div>
                   </div>
                 </div>
@@ -78,7 +77,6 @@ const Navbar = ({user,token}) => {
                       Profile
                     </Link>
                   </li>
-                  <li><a>Settings</a></li>
                   <li><button onClick={logOutHandler}>Log Out</button></li>
                 </ul>
               </div>
@@ -90,15 +88,3 @@ const Navbar = ({user,token}) => {
 }
 
 export default Navbar
-
-// <div className="flex  justify-between px-6 py-3 border-b-2 rounded-md hover:bg-info hover:text-white">
-//     <div className="">
-//         <div className=" flex flex-col gap-3">
-//           <h3>{product?.title}</h3>
-//           <p>{product?.brand}</p>
-//         </div>
-//     </div>
-//     <div className="">
-//       <img src={product?.thumbnail} className=' w-24' alt="" />
-//     </div>
-// </div>

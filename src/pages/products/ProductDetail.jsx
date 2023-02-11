@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import {  useNavigate, useParams } from 'react-router-dom';
 import ProductDetailLoader from '../../components/Loading/ProductDetailLoader';
 import Navbar from '../../components/Navbar';
@@ -33,7 +34,7 @@ const ProductDetail = () => {
 
     const handleChange = event => {
         setCount(event.target.value);
-      };
+    };
   
 
     //image handle
@@ -48,11 +49,12 @@ const ProductDetail = () => {
         setCategory(data?.category);
     },[data])
 
-    const nav = useNavigate()
+    const nav = useNavigate();
+    const carts = useSelector((state) => state.cart)
 
   return (
     <div>
-        <Navbar user={user} token={token} />
+        <Navbar user={user} token={token} carts={carts} />
         {isLoading ? (<ProductDetailLoader/>) : (
         <div className="mt-10 ">
             
@@ -60,7 +62,6 @@ const ProductDetail = () => {
             <button className='btn ' onClick={() => nav('/dashboard')}>Back</button>
         </div>
         <div className="flex justify-evenly items-center flex-col md:flex-row ">
-        
             {/* image  */}
             <div className=" flex flex-col gap-5 justify-between items-center ">
                 <div className=" border-2">
@@ -86,11 +87,11 @@ const ProductDetail = () => {
                 <div className="">
                     <div className=" flex flex-wrap gap-5">
                         <div className="rating">
-                          <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                          <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400"  />
-                          <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                          <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                          <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
+                            <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
+                            <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400"  />
+                            <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
+                            <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
+                            <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
                         </div>
                         <div className="">
                             <span className='text-lg '>({data?.rating} rating)</span>

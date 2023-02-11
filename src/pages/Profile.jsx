@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux';
 import Navbar from '../components/Navbar'
 
 const Profile = () => {
@@ -13,9 +14,11 @@ const Profile = () => {
     var user = JSON.parse(Cookies.get('user'));
   }
 
+  const carts = useSelector((state) => state.cart)
+
   return (
     <div>
-        <Navbar user={user} token={token} />
+        <Navbar user={user} token={token} carts={carts} />
 
         <div className="flex justify-center mt-14">
           <div className=" w-5/12">
