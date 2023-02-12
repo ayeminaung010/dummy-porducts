@@ -1,12 +1,13 @@
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductDetailLoader from "../../components/Loading/ProductDetailLoader";
 import Navbar from "../../components/Navbar";
 import RelatedProducts from "../../components/proudcts/RelatedProducts";
 import { useGetSingleProuctsQuery } from "../../features/Products/productApi";
 import {MdOutlineArrowBackIosNew} from 'react-icons/md';
+import { addCarts } from "../../services/CartSlice";
 
 const ProductDetail = () => {
   const remember_me = Cookies.get("remember_me");
@@ -20,7 +21,7 @@ const ProductDetail = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetSingleProuctsQuery({ id, token });
 
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   //count
   const decreaseBtn = () => {
     if (count > 1) {
@@ -51,6 +52,13 @@ const ProductDetail = () => {
 
   const nav = useNavigate();
   const carts = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
+  const addToCartHandler = (data) => {
+    const sendData = {'id' : data?.id,'count' : count, 'brand' : data?.brand, 'category' : data?.category , 'description' : data?.description, 'discountPercentage' : data?.discountPercentage ,'price' : data?.price  ,'rating' : data?.rating ,'stock' : data?.stock ,'thumbnail' : data?.thumbnail ,'title' : data?.title} ;
+    console.log(sendData);
+    dispatch(addCarts(sendData));
+  }
 
   return (
     <div>
@@ -153,7 +161,7 @@ const ProductDetail = () => {
                   </button>
                 </div>
                 <div className="">
-                  <button className=" btn btn-warning">Add to cart</button>
+                  <button className=" btn btn-warning" onClick={() =>addToCartHandler(data)}>Add to cart</button>
                 </div>
               </div>
             </div>

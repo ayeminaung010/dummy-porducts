@@ -7,7 +7,7 @@ import {SlMinus,SlPlus} from 'react-icons/sl'
 const CartItem = ({cart,increasePrice,decreasePrice}) => {
 
     const dispatch =  useDispatch();
-    const [count,setCount] = useState(1);
+    const [count,setCount] = useState(cart?.count);
     
     const decreaseBtn = () =>{
       if(count > 1){

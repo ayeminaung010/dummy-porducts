@@ -25,13 +25,14 @@ const CartList = () => {
   const [subTotal,setTotal] = useState(0);
   
   useEffect(() => {
-    let cartItem;
+    // let cartItem;
     if(Cookies.get('cartItem')){
-      cartItem = JSON.parse(Cookies.get('cartItem'));
+      let cartItem = JSON.parse(Cookies.get('cartItem'));
       dispatch(restoreCarts(cartItem));
     }
-    let total = cartItem?.reduce((pv,cv) => pv+cv.price,0);
+    let total = carts?.cart.reduce((pv,cv) => pv+(cv.price*cv.count),0);
     setTotal(total);
+    // Cookies.set('subTotal' , subTotal);
   },[])
 
   const increasePrice = price =>{
