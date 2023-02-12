@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useSearchProductsQuery } from '../features/Products/productApi';
 import { removeUser } from '../services/AuthSlice';
 import CardProduct from './CardProduct';
@@ -27,11 +27,14 @@ const Navbar = ({user,token,carts}) => {
 
    let totalPrice = carts?.cart?.reduce((pv,cv) => pv+cv.price,0);
 
+   const location = useLocation();
+   const category = useParams();
+
   return (
     <div>
           <div className="navbar bg-gray-700 rounded-lg mt-5 ">
             <div className="flex-1 gap-2">
-              <label htmlFor="my-drawer" className="btn btn-outline drawer-button">
+              <label htmlFor="my-drawer" className={ location.pathname !== '/dashboard' && location.pathname !== '/' && location.pathname !== `/products/category/${category.category}` ? 'hidden' : "btn btn-outline drawer-button "}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-5 h-5 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
               </label>
               <Link to={'/dashboard'} className="btn btn-ghost normal-case text-white text-xl font-bold">Daisy SHOP</Link>
@@ -41,7 +44,7 @@ const Navbar = ({user,token,carts}) => {
               {/* search box  */}
               <div className="form-control hidden md:block md:mr-5 ">
                 <div className=" flex justify-center items-center">
-                  <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}  placeholder="Search" className="input input-bordered" />
+                  <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}  placeholder="Search" className="input input-bordered " />
                   <button className='btn bg-gray-800 ml-2' onClick={searchHandler}><BiSearch className=' text-lg'/></button>
                 </div>
               </div>

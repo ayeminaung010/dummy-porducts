@@ -11,7 +11,7 @@ const CardProduct = ({product}) => {
 
   return (
     <div>
-        <div className="card w-96 h-[500px] bg-gray-800 shadow-xl ">
+        <div className="card w-96 h-[500px] bg-gray-800 shadow-xl  ">
             <figure className=' '><img src={product?.thumbnail} className='h-72 w-full  rounded' /></figure>
               <div className="card-body">
                 <Link to={`/product/detail/${product?.id}`}>

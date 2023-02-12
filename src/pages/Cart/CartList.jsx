@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CartItem from '../../components/Cart/CartItem';
 import Navbar from '../../components/Navbar';
-import { restoreCarts } from '../../services/CartSlice';
-import {MdDeleteSweep} from 'react-icons/md'
+import { clearCarts, restoreCarts } from '../../services/CartSlice';
+import {MdDeleteSweep} from 'react-icons/md';
+import {BsFillBagCheckFill} from 'react-icons/bs';
 
 const CartList = () => {
 
@@ -21,15 +22,32 @@ const CartList = () => {
   const dispatch = useDispatch();
   const carts = useSelector(state => state.cart);
 
-
+  const [subTotal,setTotal] = useState(0);
+  
   useEffect(() => {
+    let cartItem;
     if(Cookies.get('cartItem')){
-      let cartItem = JSON.parse(Cookies.get('cartItem'));
+      cartItem = JSON.parse(Cookies.get('cartItem'));
       dispatch(restoreCarts(cartItem));
     }
+    let total = cartItem?.reduce((pv,cv) => pv+cv.price,0);
+    setTotal(total);
   },[])
 
-  let subTotal = carts?.cart?.reduce((pv,cv) => pv+cv.price,0);
+  const increasePrice = price =>{
+      setTotal(subTotal + price)
+  }
+
+  const decreasePrice = price => {
+      setTotal(subTotal - price);
+  }
+  
+  //clear cart
+  const clearCartHandler = () => {
+    dispatch(clearCarts());
+    setTotal(0);
+  }
+
   return (
     <div>
       <Navbar user={user}  token={token} carts={carts} />
@@ -47,8 +65,36 @@ const CartList = () => {
 
           <div className=" mt-10">
             {carts.cart?.map((cart) => (
-              <CartItem cart={cart} key={cart.id} subTotal={subTotal}/>
+              <CartItem cart={cart} key={cart.id} increasePrice={increasePrice} decreasePrice={decreasePrice}  />
             ))}
+          </div>
+           <div className=" flex flex-wrap gap-3 mx-3 justify-center md:justify-between mb-10">
+            <div className="">
+              <button className=' btn bg-red-500' onClick={clearCartHandler}><MdDeleteSweep className=' text-3xl mr-2' /> Clear All Cart</button>
+            </div>
+            <div className="flex  justify-end  mb-5">
+                <div className=" bg-gray-700 p-5 px-10 w-80 md:w-96 text-center rounded shadow ">
+                  <h1 className=' text-2xl font-bold'>Order Summay</h1>
+                  <div className="flex  mt-5 justify-between items-end font-semibold text-xl">
+                    <span >SubTotal  </span>
+                    <span className=' text-warning'>{subTotal} $</span>
+                  </div>
+                  <div className="flex  mt-5 justify-between items-end font-semibold text-xl">
+                    <span >Delivery  </span>
+                    <span className=' text-warning'>50 $</span>
+                  </div>
+                  <hr  className=' text-red-500 mt-3'/>
+                  <div className="flex  mt-5 justify-between items-end font-semibold text-xl">
+                    <span >Total  </span>
+                    <span className=' text-warning'>{subTotal + 50} $</span>
+                  </div>
+                  <div className="flex flex-col mt-5">
+                    <Link to={'/carts/shipping'}>
+                      <button className=' btn btn-primary w-full'><BsFillBagCheckFill className=' text-xl mr-3'/> Check Out </button>
+                    </Link>
+                  </div>
+                </div>
+            </div>
           </div>
         </div>
         ) : (
@@ -61,32 +107,7 @@ const CartList = () => {
         )}
       </div>
 
-      <div className=" flex flex-wrap gap-3 mx-3 justify-center md:justify-between mb-10">
-        <div className="">
-          <button className=' btn bg-red-500'><MdDeleteSweep className=' text-3xl mr-2'/> Clear All Cart</button>
-        </div>
-        <div className="flex  justify-end  mb-5">
-            <div className=" bg-gray-700 p-5 px-10 w-80 md:w-96 text-center rounded shadow ">
-              <h1 className=' text-2xl font-bold'>Order Summay</h1>
-              <div className="flex  mt-5 justify-between items-end font-semibold text-xl">
-                <span >SubTotal  </span>
-                <span className=' text-warning'>{subTotal} $</span>
-              </div>
-              <div className="flex  mt-5 justify-between items-end font-semibold text-xl">
-                <span >Delivery  </span>
-                <span className=' text-warning'>5000 $</span>
-              </div>
-              <hr  className=' text-red-500 mt-3'/>
-              <div className="flex  mt-5 justify-between items-end font-semibold text-xl">
-                <span >Total  </span>
-                <span className=' text-warning'>{subTotal + 5000} $</span>
-              </div>
-              <div className="flex flex-col mt-5">
-                <button className=' btn btn-primary'>Check Out </button>
-              </div>
-            </div>
-        </div>
-      </div>
+     
     </div>
   )
 }

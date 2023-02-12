@@ -31,7 +31,6 @@ const CardCategory = ({token,user,category}) => {
                   <label htmlFor="my-drawer" className="drawer-overlay"></label>
                   <ul className="menu p-4 w-80 bg-base-100 text-base-content">
                     <li className=' font-bold text-xl'>Categories</li>
-                    <li><Link to={'/dashboard'}>All Categories</Link></li>
                     <Category user={user} token={token}/>
                   </ul>
                 </div>

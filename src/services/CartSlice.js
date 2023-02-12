@@ -26,10 +26,14 @@ export const CartSlice = createSlice({
             let cartItem = JSON.parse(Cookies.get('cartItem'));
             cartItem = cartItem.filter((i) => i.id !== payload?.id);
             Cookies.set('cartItem',JSON.stringify(cartItem));
-        }
+        },
+        clearCarts : (state) => {
+            state.cart = [];
+            Cookies.remove('cartItem');
+        },
     }
     
 })
 
-export const {addCarts,restoreCarts,removeCart} = CartSlice.actions;
+export const {addCarts,restoreCarts,removeCart,clearCarts} = CartSlice.actions;
 export default CartSlice.reducer 

@@ -28,7 +28,7 @@ const Products = ({user,token,search}) => {
             <input id="my-drawer" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content ">
               {/* products  */}
-              <div className=' flex flex-wrap mt-10 gap-6 justify-center'>
+              <div className=' flex flex-wrap mt-10 gap-6 justify-center '>
                   {data?.products?.map((product) => (
                           <CardProduct key={product?.id} product={product}/>
                     ) )}

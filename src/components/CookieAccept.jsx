@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ContentLoader from "react-content-loader";
 import CookieConsent from "react-cookie-consent";
 
 
@@ -20,6 +21,7 @@ const CookieAccept = () => {
         >
         This site uses cookies.See our <a href="#">private policy</a> for more.
       </CookieConsent>
+
     </div>
   );
 };

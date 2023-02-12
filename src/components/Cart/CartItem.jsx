@@ -1,22 +1,24 @@
-import Cookies from 'js-cookie';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { removeCart } from '../../services/CartSlice';
 import {CiCircleRemove} from 'react-icons/ci'
 import {SlMinus,SlPlus} from 'react-icons/sl'
 
-const CartItem = ({cart}) => {
+const CartItem = ({cart,increasePrice,decreasePrice}) => {
 
     const dispatch =  useDispatch();
     const [count,setCount] = useState(1);
+    
     const decreaseBtn = () =>{
       if(count > 1){
           setCount(pre => pre - 1);
+          decreasePrice(cart?.price)
       }
     }
     const increaseBtn = () =>{
       if(count < cart?.stock){
         setCount(pre => pre + 1);
+        increasePrice(cart?.price)
       }
     }
   
@@ -26,6 +28,7 @@ const CartItem = ({cart}) => {
 
     const removeHandler = (cart) => {
         const result = dispatch(removeCart(cart));
+        decreasePrice(cart?.price)
     }
 
   return (
