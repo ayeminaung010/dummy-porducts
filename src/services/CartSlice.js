@@ -14,7 +14,7 @@ export const CartSlice = createSlice({
             if(!isExist){
                 cart.push(payload);
             }else{
-                return cart;
+                return;
             }
             Cookies.set('cartItem',JSON.stringify(state.cart));
         },

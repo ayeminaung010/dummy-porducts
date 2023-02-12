@@ -28,7 +28,7 @@ const CartItem = ({cart,increasePrice,decreasePrice}) => {
 
     const removeHandler = (cart) => {
         const result = dispatch(removeCart(cart));
-        decreasePrice(cart?.price)
+        decreasePrice(cart?.price * count);
     }
 
   return (
