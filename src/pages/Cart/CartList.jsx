@@ -25,15 +25,16 @@ const CartList = () => {
   const [subTotal,setTotal] = useState(0);
   
   useEffect(() => {
-    // let cartItem;
-    if(Cookies.get('cartItem')){
+    if (Cookies.get('cartItem')) {
       let cartItem = JSON.parse(Cookies.get('cartItem'));
       dispatch(restoreCarts(cartItem));
     }
-    let total = carts?.cart.reduce((pv,cv) => pv+(cv.price*cv.count),0);
+  }, []);
+
+  useEffect(() => {
+    let total = carts?.cart.reduce((pv, cv) => pv + (cv.price * cv.count), 0);
     setTotal(total);
-    // Cookies.set('subTotal' , subTotal);
-  },[])
+  }, [carts]);
 
   const increasePrice = price =>{
       setTotal(subTotal + price)
@@ -58,7 +59,7 @@ const CartList = () => {
         <div className="">
           <div className="flex justify-center mt-10">
             <ul className="steps steps-horizontal grid-cols-6 md:grid-cols-12 ">
-              <li className="step step-primary col-span-4">Cart</li>
+              <li className="step step-primary col-span-5">Cart</li>
               <li className="step col-span-4">Shipping</li>
               <li className="step col-span-5">Payments</li>
             </ul>
